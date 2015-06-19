@@ -78,4 +78,12 @@ $BUILD_DIR/themes/crowdsite/node_modules/.bin/gulp analytics:set
 echo "\n-----> Building the site"
 cd $BUILD_DIR
 mkdir -p static | indent
-./hugo | indent
+
+# If QA is not set use config.toml otherwise use qa.config
+if [ -z "$QA" ]; then
+  echo "\n-----> Using prod config file"
+  ./hugo | indent
+else
+  echo "\n-----> Using qa config file"
+  ./hugo --config=qa.config.toml | indent
+fi
