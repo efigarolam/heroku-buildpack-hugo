@@ -80,10 +80,10 @@ cd $BUILD_DIR
 mkdir -p static | indent
 
 # If QA is not set use config.toml otherwise use qa.config
-if [ -z "$QA" ]; then
-  echo "\n-----> Using prod config file"
-  ./hugo | indent
-else
+if [ "$QA" = "true" ]; then
   echo "\n-----> Using qa config file"
   ./hugo --config=qa.config.toml | indent
+else
+  echo "\n-----> Using prod config file"
+  ./hugo | indent
 fi
