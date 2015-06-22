@@ -73,6 +73,11 @@ echo "\n-----> Compiling assets with gulp"
 $BUILD_DIR/themes/crowdsite/node_modules/.bin/gulp sass
 $BUILD_DIR/themes/crowdsite/node_modules/.bin/gulp scripts
 
+if [ ! -f "$ENV_DIR/QA" ]; then
+  echo "\n-----> Setting analytics keys"
+  $BUILD_DIR/themes/crowdsite/node_modules/.bin/gulp analytics:set
+fi
+
 # Build the site
 echo "\n-----> Building the site"
 cd $BUILD_DIR
@@ -83,7 +88,6 @@ if [ -f "$ENV_DIR/QA" ]; then
   echo "\n-----> Using qa config file"
   ./hugo --config=qa.config.toml | indent
 else
-  $BUILD_DIR/themes/crowdsite/node_modules/.bin/gulp analytics:set
   echo "\n-----> Using prod config file"
   ./hugo | indent
 fi
